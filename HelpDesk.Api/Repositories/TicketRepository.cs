@@ -35,8 +35,12 @@ namespace HelpDesk.Api.Repositories
 
         public async Task UpdateTicketAsync(Ticket ticket)
         {
-            _context.Entry(ticket).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var existing = await _context.Tickets.FindAsync(ticket.Id);
+            if (existing != null)
+            {
+                _context.Entry(existing).CurrentValues.SetValues(ticket);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteTicketAsync(int id)
