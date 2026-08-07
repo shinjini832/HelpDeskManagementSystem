@@ -1,0 +1,65 @@
+@model HelpDesk.Api.Models.Ticket
+
+@{
+    ViewData["Title"] = "Raise New Ticket";
+}
+
+<div class="mb-4">
+    <h1 class="page-title">Raise New Ticket</h1>
+    <p class="text-muted">Create a new support request. Status will automatically be set to 'Open'.</p>
+</div>
+
+<div class="glass-card" style="max-width: 600px;">
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" placeholder="Brief summary of the issue" required />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="control-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Detailed description of the issue, steps to reproduce, error messages..." required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="RaisedBy" class="control-label">Raised By (Employee Name/Email)</label>
+            <input asp-for="RaisedBy" class="form-control" placeholder="e.g. John Doe" required />
+            <span asp-validation-for="RaisedBy" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-4">
+            <label asp-for="Priority" class="control-label"></label>
+            <select asp-for="Priority" class="form-control" required>
+                <option value="" disabled selected>-- Select Priority --</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+
+        <!-- Hardcoded Status Info (visual only, actual setting done in Controller POST action) -->
+        <div class="mb-4 p-3 rounded" style="background-color: var(--status-open-bg); color: var(--status-open-text); border: 1px dashed var(--status-open-text);">
+            <strong>Ticket Status:</strong> Open (automatically assigned)
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-primary-custom">
+                Submit Ticket
+            </button>
+            <a asp-action="Index" class="btn btn-secondary-custom">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,105 @@
+@model HelpDesk.Api.Models.Ticket
+
+@{
+    ViewData["Title"] = "Edit Ticket";
+}
+
+<div class="mb-4">
+    <h1 class="page-title">Edit Ticket</h1>
+    <p class="text-muted">Modify support request #@Model.Id details.</p>
+</div>
+
+<div class="glass-card" style="max-width: 600px;">
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CreatedDate" />
+        <input type="hidden" asp-for="RaisedBy" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" required />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="control-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="5" required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <!-- Raised By information (read-only in Edit view for security, displayed visually) -->
+        <div class="mb-3">
+            <span style="font-weight: 600; color: #475569; font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Raised By</span>
+            <div class="p-2 rounded bg-light border text-muted">@Model.RaisedBy</div>
+        </div>
+
+        <!-- Priority Selector using Premium Radio Tiles -->
+        <div class="form-group mb-4">
+            <label class="control-label">Priority</label>
+            <div class="radio-tile-group">
+                <div class="radio-tile-wrapper">
+                    <input type="radio" asp-for="Priority" value="Low" class="radio-tile-input" required />
+                    <div class="radio-tile">
+                        <span class="radio-tile-label">Low</span>
+                    </div>
+                </div>
+                <div class="radio-tile-wrapper">
+                    <input type="radio" asp-for="Priority" value="Medium" class="radio-tile-input" required />
+                    <div class="radio-tile">
+                        <span class="radio-tile-label">Medium</span>
+                    </div>
+                </div>
+                <div class="radio-tile-wrapper">
+                    <input type="radio" asp-for="Priority" value="High" class="radio-tile-input" required />
+                    <div class="radio-tile">
+                        <span class="radio-tile-label">High</span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="Priority" class="text-danger"></span>
+        </div>
+
+        <!-- Status Selector using Premium Radio Tiles -->
+        <div class="form-group mb-4">
+            <label class="control-label">Status</label>
+            <div class="radio-tile-group">
+                <div class="radio-tile-wrapper">
+                    <input type="radio" asp-for="Status" value="Open" class="radio-tile-input" required />
+                    <div class="radio-tile">
+                        <span class="radio-tile-label">Open</span>
+                    </div>
+                </div>
+                <div class="radio-tile-wrapper">
+                    <input type="radio" asp-for="Status" value="In Progress" class="radio-tile-input" required />
+                    <div class="radio-tile">
+                        <span class="radio-tile-label">In Progress</span>
+                    </div>
+                </div>
+                <div class="radio-tile-wrapper">
+                    <input type="radio" asp-for="Status" value="Closed" class="radio-tile-input" required />
+                    <div class="radio-tile">
+                        <span class="radio-tile-label">Closed</span>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-3">
+            <button type="submit" class="btn btn-primary-custom">
+                Save Changes
+            </button>
+            <a asp-action="Index" class="btn btn-secondary-custom">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
