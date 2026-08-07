@@ -60,6 +60,9 @@ namespace HelpDesk.Mvc.Controllers
             ticket.Status = "Open";
             ticket.CreatedDate = DateTime.Now;
 
+            ModelState.Remove("Status");
+            ModelState.Remove("CreatedDate");
+
             if (ModelState.IsValid)
             {
                 var result = await _ticketService.CreateTicketAsync(ticket);
