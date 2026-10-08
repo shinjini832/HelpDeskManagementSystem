@@ -117,6 +117,6 @@ The test suite consists of **12 xUnit tests** mocking the repository layer with 
 ---
 
 ## Submission Info
-- **Student ID**: `IN101`
-- **Student Name**: `Rahul Sharma`
-- **GitHub Repository URL**: `https://github.com/rahulsharma/HelpDeskManagement`
+- **Student ID**: `IN26015118`
+- **Student Name**: `Shinjini Srivastava`
+- **GitHub Repository URL**: `https://github.com/shinjini832/HelpDeskManagementSystem`
